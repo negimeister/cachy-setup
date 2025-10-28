@@ -1,0 +1,4 @@
+---
+- hosts: cachy
+  roles:
+    - role: cachy
