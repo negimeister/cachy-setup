@@ -1,0 +1,170 @@
+// Symbols for Japanese 106-keys keyboards (by tsuka@kawalab.dnj.ynu.ac.jp).
+
+default  partial alphanumeric_keys
+xkb_symbols "106" {
+
+    include "jp(common)"
+    name[Group1]= "Japanese";
+
+    key <AE10> { [ 0, asciitilde	] };
+    key <AE13> { [ backslash, bar	] };
+};
+
+hidden partial
+xkb_symbols "common" {
+    // "Common" keys for jp 106/109A layouts.
+
+    key <HZTG> {
+	type[Group1]="PC_ALT_LEVEL2",
+	symbols[Group1]= [ Zenkaku_Hankaku, Kanji ]
+    };
+
+    key <AE03> { [ 3, numbersign, XF86AudioMute	] };
+    key <AE04> { [ 4, dollar		] };
+    key <AE05> { [ 5, percent		] };
+    key <AE06> { [ 6, ampersand		] };
+    key <AE07> { [ 7, apostrophe	] };
+    key <AE08> { [ 8, parenleft		] };
+    key <AE09> { [ 9, parenright	] };
+    key <AE10> { [ 0, underscore	] };
+    key <AE11> { [ minus, equal		] };
+    key <AE12> { [ asciicircum,	asciitilde] };
+
+    key <AD01> { [ q, Q			] };
+    key <AD02> { [ w, W			] };
+    key <AD03> { [ e, E			] };
+    key <AD04> { [ r, R			] };
+    key <AD05> { [ t, T			] };
+    key <AD06> { [ y, Y			] };
+    key <AD07> { [ u, U			] };
+    key <AD08> { [ i, I			] };
+    key <AD09> { [ o, O			] };
+    key <AD10> { [ p, P			] };
+    key <AD11> { [ at, grave		] };
+    key <AD12> { [ bracketleft,	braceleft, bracketright, braceright ] };
+    key <AD13> { [ backslash,	bar ] };
+
+    key <CAPS> { [ F12, Zenkaku_Hankaku ] };
+
+    key <AC01> { [ a, A			] };
+    key <AC02> { [ s, S			] };
+    key <AC03> { [ d, D			] };
+    key <AC04> { [ f, F			] };
+    key <AC05> { [ g, G			] };
+    key <AC06> { [ h, H			] };
+    key <AC07> { [ j, J			] };
+    key <AC08> { [ k, K			] };
+    key <AC09> { [ l, L			] };
+    key <AC10> { [ semicolon, plus	] };
+    key <AC11> { [ colon, asterisk	] };
+    key <AC12> { [ bracketright, braceright, bracketleft, braceleft ] };
+
+    key <AB01> { [ z, Z			] };
+    key <AB02> { [ x, X			] };
+    key <AB03> { [ c, C			] };
+    key <AB04> { [ v, V			] };
+    key <AB05> { [ b, B			] };
+    key <AB06> { [ n, N			] };
+    key <AB07> { [ m, M			] };
+    key <AB08> { [ comma,  less		] };
+    key <AB09> { [ period, greater	] };
+    key <AB10> { [ slash, question	] };
+    key <AB11> { [ backslash, underscore] };
+    key <LCTL> { [ Control_L		] };
+	
+    key <NFER> { [ Muhenkan		] };
+
+    key <XFER> {
+	type[Group1]="PC_ALT_LEVEL2",
+	symbols[Group1]= [ Henkan, Mode_switch ]
+    };
+
+    key <HKTG> {
+	type[Group1]="PC_ALT_LEVEL2",
+	symbols[Group1]= [ Hiragana_Katakana, Romaji ]
+    };
+
+    key <EISU> {
+	type[Group1]="PC_ALT_LEVEL2",
+	symbols[Group1]= [ Eisu_toggle ]
+    };
+
+    key <KANA> {
+	type[Group1]="PC_ALT_LEVEL2",
+	symbols[Group1]= [ Hiragana_Katakana ]
+    };
+
+    key <PRSC> {
+	type[Group1]= "PC_ALT_LEVEL2",
+	symbols[Group1]= [ Print, Execute ]
+    };
+};
+
+
+partial alphanumeric_keys
+xkb_symbols "OADG109A" {
+
+    include "jp(common)"
+    name[Group1]= "Japanese (OADG 109A)";
+
+    key <AE10> { [ 0		] };
+    key <AE13> { [ yen, bar	] };
+};
+
+
+partial alphanumeric_keys modifier_keys
+xkb_symbols "dvorak" {
+    include "jp(OADG109A)"
+    include "level5(ralt_switch)"
+    include "level3(switch)"
+    name[Group1]= "Japanese (Dvorak)";
+    key <AE01> { [ 1, exclam, 1, exclam, XF86AudioLowerVolume, 1                ],  type[group1] = "EIGHT_LEVEL" };
+    key <AE02> { [ 2, quotedbl, 2, quotedbl, XF86AudioRaiseVolume               ],  type[group1] = "EIGHT_LEVEL" };
+    key <AE06> { [ 6, ampersand, U2227, U2227, U2227, U2227		],  type[group1] = "EIGHT_LEVEL"   };
+    key <AE07> { [ 7, quote, grave		],  type[group1] = "EIGHT_LEVEL"   };
+    key <AE08> { [ 8, parenleft, asciitilde		],  type[group1] = "EIGHT_LEVEL"   };
+    key <AE10> { [ 0, underscore, at ] };
+    key <AE11> { [ at, grave		] };
+    key <AE12> { [ asciicircum,	asciitilde, U00AC, U00AC, U00AC],  type[group1] = "EIGHT_LEVEL"   };
+    key <AE13> { [ BackSpace, BackSpace ] };
+    key <AD01> { [ semicolon, asterisk	] };
+    key <AD02> { [ comma, less,	lessthanequal, lessthanequal, lessthanequal 	],  type[group1] = "EIGHT_LEVEL"   };
+    key <AD03> { [ period, greater, greaterthanequal, greaterthanequal, greaterthanequal	], type[group1] = "EIGHT_LEVEL"   };
+    key <AD04> { [ p, P, U00A7, U00A7, U00A7			],  type[group1] = "EIGHT_LEVEL"   };
+    key <AD05> { [ y, Y, U5186, U00A5, U5186, U00A5			],  type[group1] = "EIGHT_LEVEL" };
+    key <AD06> { [ f, F, f, F, U1F1EB			],  type[group1] = "EIGHT_LEVEL" };
+    key <AD07> { [ g, G, g, G, Prior		], type[group1] = "EIGHT_LEVEL" };
+    key <AD08> { [ c, C, Up, Prior, Up, Up		],  type[group1] = "EIGHT_LEVEL" };
+    key <AD09> { [ r, R, U211D, R, Next 		],  type[group1] = "EIGHT_LEVEL" };
+    key <AD10> { [ l, L			] };
+    key <AD11> { [ slash, question, backslash, bar, backslash, bar	],  type[group1] = "EIGHT_LEVEL" };
+    key <AD12> { [ braceleft, braceright, bracketleft, bracketright, bracketleft, bracketright ],  type[group1] = "EIGHT_LEVEL" };
+
+
+    key <LSGT> { [ backslash, bar, U2228, U2228, U2228	],  type[group1] = "EIGHT_LEVEL" };
+    key <AC01> { [ a, A, adiaeresis,     Adiaeresis	] };
+    key <AC02> { [ o, O, odiaeresis, Odiaeresis 		] };
+    key <AC03> { [ e, E, U2208, U20AC		] };
+    key <AC04> { [ u, U, udiaeresis, Udiaeresis	] };
+    key <AC05> { [ i, I			] };
+    key <AC06> { [ d, D, d, D, Delete	],  type[group1] = "EIGHT_LEVEL" };
+    key <AC07> { [ h, H, h, H, Left, Left ], type[group1]="EIGHT_LEVEL"};
+    key <AC08> { [ t, T, t, T, Down, Down			],  type[group1] = "EIGHT_LEVEL" };
+    key <AC09> { [ n, N, n, N, Right, Right			],  type[group1] = "EIGHT_LEVEL" };
+    key <AC10> { [ s, S, ssharp, U1E9E		] };
+    key <AC11> { [ minus, equal, asciitilde	] };
+    key <AC12> { [ F14 ] };
+    key <AB01> { [ colon, plus	] };
+    key <AB02> { [ q, Q, U211A			] };
+    key <AB03> { [ j, J			] };
+    key <AB04> { [ k, K			] };
+    key <AB05> { [ x, X			] };
+    key <AB06> { [ b, B, b, B			] };
+    key <AB07> { [ m, M, Prior			] };
+    key <AB08> { [ w, W, Next			] };
+    key <AB09> { [ v, V 			] };
+    key <AB10> { [ z, Z, U2124			] };
+    key <SPCE> { [ space, space, space, space, Return ],  type[group1] = "EIGHT_LEVEL"};
+};
+
+// EXTRAS:
