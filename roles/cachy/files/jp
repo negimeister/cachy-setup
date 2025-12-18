@@ -1,3 +1,4 @@
+
 // Symbols for Japanese 106-keys keyboards (by tsuka@kawalab.dnj.ynu.ac.jp).
 
 default  partial alphanumeric_keys
@@ -25,7 +26,6 @@ xkb_symbols "common" {
     key <AE06> { [ 6, ampersand		] };
     key <AE07> { [ 7, apostrophe	] };
     key <AE08> { [ 8, parenleft		] };
-    key <AE09> { [ 9, parenright	] };
     key <AE10> { [ 0, underscore	] };
     key <AE11> { [ minus, equal		] };
     key <AE12> { [ asciicircum,	asciitilde] };
@@ -44,7 +44,6 @@ xkb_symbols "common" {
     key <AD12> { [ bracketleft,	braceleft, bracketright, braceright ] };
     key <AD13> { [ backslash,	bar ] };
 
-    key <CAPS> { [ F12, Zenkaku_Hankaku ] };
 
     key <AC01> { [ a, A			] };
     key <AC02> { [ s, S			] };
@@ -114,15 +113,18 @@ xkb_symbols "OADG109A" {
 
 partial alphanumeric_keys modifier_keys
 xkb_symbols "dvorak" {
-    include "jp(OADG109A)"
     include "level5(ralt_switch)"
     include "level3(switch)"
     name[Group1]= "Japanese (Dvorak)";
     key <AE01> { [ 1, exclam, 1, exclam, XF86AudioLowerVolume, 1                ],  type[group1] = "EIGHT_LEVEL" };
     key <AE02> { [ 2, quotedbl, 2, quotedbl, XF86AudioRaiseVolume               ],  type[group1] = "EIGHT_LEVEL" };
+    key <AE03> { [ 3, numbersign, XF86AudioMute ] };
+    key <AE04> { [ 4, dollar            ] };
+    key <AE05> { [ 5, percent           ] };
     key <AE06> { [ 6, ampersand, U2227, U2227, U2227, U2227		],  type[group1] = "EIGHT_LEVEL"   };
-    key <AE07> { [ 7, quote, grave		],  type[group1] = "EIGHT_LEVEL"   };
+    key <AE07> { [ 7, apostrophe, grave		],  type[group1] = "EIGHT_LEVEL"   };
     key <AE08> { [ 8, parenleft, asciitilde		],  type[group1] = "EIGHT_LEVEL"   };
+    key <AE09> { [ 9, parenright	] };
     key <AE10> { [ 0, underscore, at ] };
     key <AE11> { [ at, grave		] };
     key <AE12> { [ asciicircum,	asciitilde, U00AC, U00AC, U00AC],  type[group1] = "EIGHT_LEVEL"   };
@@ -139,6 +141,7 @@ xkb_symbols "dvorak" {
     key <AD10> { [ l, L			] };
     key <AD11> { [ slash, question, backslash, bar, backslash, bar	],  type[group1] = "EIGHT_LEVEL" };
     key <AD12> { [ braceleft, braceright, bracketleft, bracketright, bracketleft, bracketright ],  type[group1] = "EIGHT_LEVEL" };
+    key <CAPS> { [ F12, Zenkaku_Hankaku ] };
 
 
     key <LSGT> { [ backslash, bar, U2228, U2228, U2228	],  type[group1] = "EIGHT_LEVEL" };

@@ -1,0 +1,40 @@
+---
+- name: Check if yay is already installed
+  command: yay --version
+  register: yay_check
+  ignore_errors: yes
+  changed_when: false
+
+- name: Install yay if not present
+  block:
+    - name: Clone yay repository
+      git:
+        repo: https://aur.archlinux.org/yay.git
+        dest: /tmp/yay
+        update: no
+      become: no
+
+    - name: Build yay package (no install yet)
+      command: makepkg -sf --noconfirm
+      args:
+        chdir: /tmp/yay
+      become: no
+
+    - name: Find built yay package
+      find:
+        paths: /tmp/yay
+        patterns: "yay-*.pkg.tar.zst"
+      register: yay_pkg
+
+    - name: Install built yay package
+      pacman:
+        name: "{{ yay_pkg.files[0].path }}"
+        state: present
+      become: yes
+
+    - name: Clean up yay build directory
+      file:
+        path: /tmp/yay
+        state: absent
+      become: no
+  when: yay_check.rc != 0

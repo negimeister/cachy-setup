@@ -1,0 +1,28 @@
+---
+- name: Install distrobox
+  pacman:
+    name: distrobox
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Check if distrobox container already exists
+  command: distrobox list --no-color
+  register: distrobox_list
+  changed_when: false
+  failed_when: false
+  become: no
+
+- name: Get Information about the realtime group
+  shell: "getent group realtime"
+  register: group_info
+
+- name: Create distrobox container
+  command: >
+    distrobox create
+    --yes
+    -a "--cap-add=sys_nice --group-add 959 --group-add uucp"
+    --name negibox
+    --image negimeister/negibox-desktop:latest
+  when: "' negibox '  not in (' ' + distrobox_list.stdout + ' ')"
+  become: no

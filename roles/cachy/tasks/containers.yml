@@ -1,0 +1,75 @@
+---
+- name: Ensure kopia password provided
+  assert:
+    that:
+      - kopia_password is defined
+    fail_msg: "Variable 'kopia_password' must be set to deploy the Kopia container."
+
+- name: Determine UID for {{ ansible_user }}
+  command: id -u {{ ansible_user }}
+  register: cachy_uid
+  changed_when: false
+  become: yes
+
+- name: Determine GID for {{ ansible_user }}
+  command: id -g {{ ansible_user }}
+  register: cachy_gid
+  changed_when: false
+  become: yes
+
+- name: Ensure container directories exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+  loop:
+    - "{{ cachy_container_base_path }}"
+    - "{{ cachy_container_base_path }}/syncthing/config"
+    - "{{ cachy_container_base_path }}/syncthing/data"
+    - "{{ cachy_container_base_path }}/kopia/config"
+    - "{{ cachy_container_base_path }}/kopia/cache"
+    - "{{ cachy_container_base_path }}/kopia/repository"
+  become: yes
+
+- name: Deploy Syncthing container
+  community.docker.docker_container:
+    name: syncthing
+    image: lscr.io/linuxserver/syncthing:latest
+    restart_policy: unless-stopped
+    pull: yes
+    state: started
+    published_ports:
+      - "8384:8384"
+      - "22000:22000/tcp"
+      - "22000:22000/udp"
+      - "21027:21027/udp"
+    volumes:
+      - "{{ cachy_container_base_path }}/syncthing/config:/config"
+      - "{{ cachy_container_base_path }}/syncthing/data:/data"
+    env:
+      PUID: "{{ syncthing_puid | default(cachy_uid.stdout) }}"
+      PGID: "{{ syncthing_pgid | default(cachy_gid.stdout) }}"
+      TZ: "{{ syncthing_timezone | default(linuxserver_timezone) }}"
+  become: yes
+
+- name: Deploy Kopia container
+  community.docker.docker_container:
+    name: kopia
+    image: lscr.io/linuxserver/kopia:latest
+    restart_policy: unless-stopped
+    pull: yes
+    state: started
+    published_ports:
+      - "51515:51515"
+    volumes:
+      - "{{ cachy_container_base_path }}/kopia/config:/config"
+      - "{{ cachy_container_base_path }}/kopia/cache:/cache"
+      - "{{ cachy_container_base_path }}/kopia/repository:/repository"
+    env:
+      PUID: "{{ kopia_puid | default(cachy_uid.stdout) }}"
+      PGID: "{{ kopia_pgid | default(cachy_gid.stdout) }}"
+      TZ: "{{ kopia_timezone | default(linuxserver_timezone) }}"
+      KOPIA_PASSWORD: "{{ kopia_password }}"
+  become: yes

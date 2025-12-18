@@ -1,0 +1,81 @@
+---
+- name: Ensure /.snapshots directory exists
+  file:
+    path: /.snapshots
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: yes
+
+- name: Ensure subvolume .snapshots directories exist
+  file:
+    path: "{{ item.path }}/.snapshots"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  loop: "{{ snapper_subvolumes }}"
+  when: snapper_subvolumes | length > 0
+  become: yes
+
+- name: Check for snapper root config
+  stat:
+    path: /etc/snapper/configs/root
+  register: snapper_root_config
+  become: yes
+
+- name: Create snapper configuration for root
+  command: snapper -c root create-config /
+  become: yes
+  when: not snapper_root_config.stat.exists
+
+- name: Check for snapper subvolume configs
+  stat:
+    path: "/etc/snapper/configs/{{ item.name }}"
+  loop: "{{ snapper_subvolumes }}"
+  register: snapper_subvolume_configs
+  when: snapper_subvolumes | length > 0
+  become: yes
+
+- name: Create snapper configurations for subvolumes
+  command: snapper -c {{ item.item.name }} create-config {{ item.item.path }}
+  loop: "{{ (snapper_subvolume_configs.results if snapper_subvolume_configs is defined else []) }}"
+  when: not item.stat.exists
+        and snapper_subvolumes | length > 0
+  loop_control:
+    label: "{{ item.item.name }}"
+  become: yes
+
+- name: Configure snapper retention policy
+  lineinfile:
+    path: "/etc/snapper/configs/{{ item.0 }}"
+    regexp: "^{{ item.1.key }}="
+    line: "{{ item.1.key }}={{ item.1.value }}"
+  vars:
+    snapper_retention_settings:
+      - { key: "TIMELINE_CREATE", value: '"yes"' }
+      - { key: "TIMELINE_CLEANUP", value: '"yes"' }
+      - { key: "TIMELINE_MIN_AGE", value: '"1800"' }
+      - { key: "TIMELINE_LIMIT_HOURLY", value: '"24"' }
+      - { key: "TIMELINE_LIMIT_DAILY", value: '"7"' }
+      - { key: "TIMELINE_LIMIT_WEEKLY", value: '"4"' }
+      - { key: "TIMELINE_LIMIT_MONTHLY", value: '"3"' }
+      - { key: "TIMELINE_LIMIT_YEARLY", value: '"1"' }
+      - { key: "NUMBER_LIMIT", value: '"50"' }
+      - { key: "NUMBER_LIMIT_IMPORTANT", value: '"10"' }
+    snapper_config_names: "{{ ['root'] + (snapper_subvolumes | default([]) | map(attribute='name') | list) }}"
+  loop: "{{ snapper_config_names | product(snapper_retention_settings) | list }}"
+  loop_control:
+    label: "{{ item.0 }} -> {{ item.1.key }}"
+  become: yes
+
+- name: Enable automatic snapper snapshots and cleanup
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  loop:
+    - snapper-timeline.timer
+    - snapper-cleanup.timer
+  become: yes

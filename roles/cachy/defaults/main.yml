@@ -1,0 +1,8 @@
+---
+cachy_container_base_path: /opt/containers
+linuxserver_timezone: Etc/UTC
+distrobox_user: "{{ ansible_user }}"
+snapper_subvolumes: []
+# snapper_subvolumes:
+#   - name: home
+#     path: /home

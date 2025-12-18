@@ -1,0 +1,20 @@
+---
+- name: Copy keyboard layout
+  ansible.builtin.copy:
+    src: jp
+    dest: /usr/share/X11/xkb/symbols/jpdv
+    owner: root
+    mode: "644"
+  become: true
+
+- name: Copy udev rules
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /etc/udev/rules.d/
+    owner: root
+    mode: "644"
+  become: true
+  with_items:
+    - 50-sofle.rules
+    - 60-hidraw.rules
+    - 69-probe-rs.rules

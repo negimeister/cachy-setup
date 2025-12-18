@@ -1,0 +1,25 @@
+---
+- name: Enable and start Tailscale service
+  systemd:
+    name: tailscaled
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Check Tailscale status
+  command: tailscale status
+  register: tailscale_status
+  changed_when: false
+  failed_when: false
+  become: yes
+
+- name: Register node with Tailscale
+  command: >
+    tailscale up
+    --login-server {{ tailscale_login_server }}
+    --authkey {{ tailscale_auth_key }}
+    --accept-dns=true
+    --accept-routes=true
+    --ssh=true
+  become: yes
+  when: tailscale_status.rc != 0
