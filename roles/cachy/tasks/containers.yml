@@ -18,10 +18,15 @@
   become: yes
 
 - name: Determine home for {{ ansible_user }}
-  command: getent passwd {{ ansible_user }} | cut -d: -f6
-  register: cachy_home
+  command: getent passwd {{ ansible_user }}
+  register: cachy_home_entry
   changed_when: false
   become: yes
+
+- name: Extract home path for {{ ansible_user }}
+  set_fact:
+    cachy_home: "{{ cachy_home_entry.stdout.split(':')[5] }}"
+  changed_when: false
 
 - name: Ensure container directories exist
   file:
@@ -52,7 +57,7 @@
       - "21027:21027/udp"
     volumes:
       - "{{ cachy_container_base_path }}/syncthing/config:/config"
-      - "{{ cachy_home.stdout }}:/data"
+      - "{{ cachy_home }}:/data"
     env:
       PUID: "{{ syncthing_puid | default(cachy_uid.stdout) }}"
       PGID: "{{ syncthing_pgid | default(cachy_gid.stdout) }}"
