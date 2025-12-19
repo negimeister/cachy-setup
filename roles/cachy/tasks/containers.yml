@@ -17,6 +17,12 @@
   changed_when: false
   become: yes
 
+- name: Determine home for {{ ansible_user }}
+  command: getent passwd {{ ansible_user }} | cut -d: -f6
+  register: cachy_home
+  changed_when: false
+  become: yes
+
 - name: Ensure container directories exist
   file:
     path: "{{ item }}"
@@ -27,7 +33,6 @@
   loop:
     - "{{ cachy_container_base_path }}"
     - "{{ cachy_container_base_path }}/syncthing/config"
-    - "{{ cachy_container_base_path }}/syncthing/data"
     - "{{ cachy_container_base_path }}/kopia/config"
     - "{{ cachy_container_base_path }}/kopia/cache"
     - "{{ cachy_container_base_path }}/kopia/repository"
@@ -47,7 +52,7 @@
       - "21027:21027/udp"
     volumes:
       - "{{ cachy_container_base_path }}/syncthing/config:/config"
-      - "{{ cachy_container_base_path }}/syncthing/data:/data"
+      - "{{ cachy_home.stdout }}:/data"
     env:
       PUID: "{{ syncthing_puid | default(cachy_uid.stdout) }}"
       PGID: "{{ syncthing_pgid | default(cachy_gid.stdout) }}"
