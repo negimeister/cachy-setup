@@ -17,8 +17,8 @@
 - name: Configure Docker
   import_tasks: docker.yml
 
-#- name: Deploy containerized services
-#  import_tasks: containers.yml
+- name: Deploy containerized services
+  import_tasks: containers.yml
 
 - name: Configure distrobox environment
   import_tasks: distrobox.yml
