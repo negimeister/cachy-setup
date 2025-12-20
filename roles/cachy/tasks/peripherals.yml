@@ -7,6 +7,11 @@
     mode: "644"
   become: true
 
+- name: Copy KDE keeb config
+  ansible.builtin.copy:
+    src: kxkbrc
+    dest: "{{ ansible_user_dir }}/.config/"
+
 - name: Copy udev rules
   ansible.builtin.copy:
     src: "{{ item }}"
