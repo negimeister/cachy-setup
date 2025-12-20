@@ -13,6 +13,7 @@
       - python-requests
       - python-packaging
       - python-docker
+      - yay
       - flatpak
       - realtime-privileges
       - tailscale

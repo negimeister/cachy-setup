@@ -17,10 +17,20 @@
   shell: "getent group realtime"
   register: group_info
 
+- name: Ensure distrobox home directory exists
+  file:
+    path: "{{ distrobox_home_dir }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+  become: yes
+
 - name: Create distrobox container
   command: >
     distrobox create
     --yes
+    --home "{{ distrobox_home_dir }}"
     -a "--cap-add=sys_nice --group-add 959 --group-add uucp"
     --name negibox
     --image negimeister/negibox-desktop:latest

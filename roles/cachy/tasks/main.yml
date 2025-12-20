@@ -2,6 +2,9 @@
 - name: Install base packages and shell defaults
   import_tasks: packages.yml
 
+- name: Deploy dotfiles
+  import_tasks: dotfiles.yml
+
 - name: Configure Tailscale connectivity
   import_tasks: tailscale.yml
   when:
@@ -10,9 +13,6 @@
 
 - name: Configure Btrfs snapshots with snapper
   import_tasks: snapper.yml
-
-- name: Install yay helper
-  import_tasks: yay.yml
 
 - name: Configure Docker
   import_tasks: docker.yml

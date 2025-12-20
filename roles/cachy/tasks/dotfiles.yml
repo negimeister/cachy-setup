@@ -1,0 +1,60 @@
+---
+- name: Ensure dotfiles repository URL is provided
+  assert:
+    that:
+      - dotfiles_repo_url is defined
+      - dotfiles_repo_url | length > 0
+    fail_msg: "Variable 'dotfiles_repo_url' must be set to deploy dotfiles."
+
+- name: Set dotfiles paths
+  set_fact:
+    dotfiles_work_tree: "{{ dotfiles_work_tree | default(distrobox_home_dir) }}"
+    dotfiles_git_dir: "{{ dotfiles_git_dir | default((dotfiles_work_tree | default(distrobox_home_dir)) ~ '/.dotfiles.git') }}"
+  changed_when: false
+
+- name: Ensure dotfiles work tree exists
+  file:
+    path: "{{ dotfiles_work_tree }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+  become: yes
+
+- name: Ensure dotfiles bare repository is present
+  git:
+    repo: "{{ dotfiles_repo_url }}"
+    dest: "{{ dotfiles_git_dir }}"
+    bare: yes
+    version: "{{ dotfiles_repo_version | default('HEAD') }}"
+    accept_hostkey: yes
+    update: yes
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: Configure dotfiles work tree
+  git_config:
+    name: core.worktree
+    repo: "{{ dotfiles_git_dir }}"
+    scope: local
+    value: "{{ dotfiles_work_tree }}"
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: Hide untracked files in dotfiles status
+  git_config:
+    name: status.showUntrackedFiles
+    repo: "{{ dotfiles_git_dir }}"
+    scope: local
+    value: "no"
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: Check out dotfiles into {{ dotfiles_work_tree }}
+  command: git --git-dir={{ dotfiles_git_dir }} --work-tree={{ dotfiles_work_tree }} checkout
+  args:
+    chdir: "{{ dotfiles_work_tree }}"
+  register: dotfiles_checkout
+  changed_when: dotfiles_checkout.rc == 0 and dotfiles_checkout.stdout is defined and dotfiles_checkout.stdout | length > 0 and 'Already on' not in dotfiles_checkout.stdout
+  become: yes
+  become_user: "{{ ansible_user }}"
