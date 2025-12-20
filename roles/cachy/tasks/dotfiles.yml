@@ -24,29 +24,11 @@
 - name: Ensure dotfiles bare repository is present
   git:
     repo: "{{ dotfiles_repo_url }}"
-    dest: "{{ dotfiles_git_dir }}"
-    bare: yes
+    dest: "{{ dotfiles_work_tree }}"
+    separate_git_dir: "{{ dotfiles_git_dir }}"
     version: "{{ dotfiles_repo_version | default('HEAD') }}"
     accept_hostkey: yes
     update: yes
-  become: yes
-  become_user: "{{ ansible_user }}"
-
-- name: Disable bare mode for dotfiles repo to allow work tree usage
-  git_config:
-    name: core.bare
-    repo: "{{ dotfiles_git_dir }}"
-    scope: local
-    value: "false"
-  become: yes
-  become_user: "{{ ansible_user }}"
-
-- name: Configure dotfiles work tree
-  git_config:
-    name: core.worktree
-    repo: "{{ dotfiles_git_dir }}"
-    scope: local
-    value: "{{ dotfiles_work_tree }}"
   become: yes
   become_user: "{{ ansible_user }}"
 
