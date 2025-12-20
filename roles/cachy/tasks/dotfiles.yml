@@ -32,6 +32,15 @@
   become: yes
   become_user: "{{ ansible_user }}"
 
+- name: Disable bare mode for dotfiles repo to allow work tree usage
+  git_config:
+    name: core.bare
+    repo: "{{ dotfiles_git_dir }}"
+    scope: local
+    value: "false"
+  become: yes
+  become_user: "{{ ansible_user }}"
+
 - name: Configure dotfiles work tree
   git_config:
     name: core.worktree
