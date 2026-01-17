@@ -24,13 +24,15 @@
 - name: Ensure dotfiles bare repository is present
   git:
     repo: "{{ dotfiles_repo_url }}"
-    dest: "{{ dotfiles_work_tree }}"
-    separate_git_dir: "{{ dotfiles_git_dir }}"
-    version: "{{ dotfiles_repo_version | default('HEAD') }}"
+    dest: "{{ dotfiles_git_dir }}"
     accept_hostkey: yes
     update: yes
+    bare: yes
   become: yes
   become_user: "{{ ansible_user }}"
+
+- name: checkout dotfiles
+  command: "git --git-dir={{ dotfiles_git_dir }} --work-tree={{ distrobox_home_dir }} checkout"
 
 - name: Hide untracked files in dotfiles status
   git_config:

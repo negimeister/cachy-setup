@@ -1,34 +1,6 @@
 all:
-  hosts:
-    host:
-      ansible_connection: local
-      ansible_python_interpreter: '/usr/bin/python3'
-  children:
-    target:
-      hosts:
-        # container:
-        #   ansible_connection: chroot
-        #   ansible_host: /build/arch_container
-        #   ansible_chroot_exe: arch-chroot
-        # server:
-        #   ansible_connection: chroot
-        #   ansible_host: /build/arch_server
-        #   ansible_chroot_exe: arch-chroot
-        desktop:
-          ansible_connection: chroot
-          ansible_host: /build/arch_desktop
-          ansible_chroot_exe: arch-chroot
-        boot:
-          ansible_connection: chroot
-          ansible_host: /build/boot
-          ansible_chroot_exe: arch-chroot
-    physical:
-      hosts:
-        desktop:
-        boot:
-    #        server:
     cachy:
       hosts:
-        framework:
+        localhost:
           ansible_host: localhost
           ansible_user: ngmstr

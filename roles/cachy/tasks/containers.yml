@@ -64,22 +64,3 @@
       TZ: "{{ syncthing_timezone | default(linuxserver_timezone) }}"
   become: yes
 
-- name: Deploy Kopia container
-  community.docker.docker_container:
-    name: kopia
-    image: lscr.io/linuxserver/kopia:latest
-    restart_policy: unless-stopped
-    pull: yes
-    state: started
-    published_ports:
-      - "51515:51515"
-    volumes:
-      - "{{ cachy_container_base_path }}/kopia/config:/config"
-      - "{{ cachy_container_base_path }}/kopia/cache:/cache"
-      - "{{ cachy_container_base_path }}/kopia/repository:/repository"
-    env:
-      PUID: "{{ kopia_puid | default(cachy_uid.stdout) }}"
-      PGID: "{{ kopia_pgid | default(cachy_gid.stdout) }}"
-      TZ: "{{ kopia_timezone | default(linuxserver_timezone) }}"
-      KOPIA_PASSWORD: "{{ kopia_password }}"
-  become: yes

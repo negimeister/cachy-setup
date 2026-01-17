@@ -1,5 +1,7 @@
 [Layout]
 DisplayNames=jpd
 LayoutList=jpdv
+Options=ctrl:swap_lalt_lctl
+ResetOldOptions=true
 Use=true
 VariantList=dvorak

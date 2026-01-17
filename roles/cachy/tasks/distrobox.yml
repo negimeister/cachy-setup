@@ -29,7 +29,7 @@
 - name: Create distrobox container
   command: >
     distrobox create
-    --yes
+    --pull
     --home "{{ distrobox_home_dir }}"
     -a "--cap-add=sys_nice --group-add 959 --group-add uucp"
     --name negibox
