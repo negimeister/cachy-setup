@@ -1,6 +1,7 @@
-all:
-    cachy:
-      hosts:
-        localhost:
-          ansible_host: localhost
-          ansible_user: ngmstr
+
+cachy:
+  hosts:
+    localhost:
+      ansible_host: localhost
+      ansible_user: ngmstr
+      ansible_connection: local
