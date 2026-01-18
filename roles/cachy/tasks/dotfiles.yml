@@ -2,8 +2,8 @@
 - name: Ensure dotfiles repository URL is provided
   assert:
     that:
-      - dotfiles_repo_url is defined
-      - dotfiles_repo_url | length > 0
+    - dotfiles_repo_url is defined
+    - dotfiles_repo_url | length > 0
     fail_msg: "Variable 'dotfiles_repo_url' must be set to deploy dotfiles."
 
 - name: Set dotfiles paths
@@ -28,6 +28,24 @@
     accept_hostkey: yes
     update: yes
     bare: yes
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: Configure dotfiles repo user.name
+  git_config:
+    name: user.name
+    repo: "{{ dotfiles_git_dir }}"
+    scope: local
+    value: "ngmstr"
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: Configure dotfiles repo user.email
+  git_config:
+    name: user.email
+    repo: "{{ dotfiles_git_dir }}"
+    scope: local
+    value: "ngmstr@leeklabs.download"
   become: yes
   become_user: "{{ ansible_user }}"
 
