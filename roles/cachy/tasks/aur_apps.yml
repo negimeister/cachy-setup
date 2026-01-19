@@ -1,14 +1,44 @@
 ---
-- name: Ensure AUR apps are installed
+- name: Ensure AUR apps are installed (java-format)
   command: >
     yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
     google-java-format
-    ripit
-    code-server
-    zsh-theme-powerlevel10k-bin-git
-  register: aur_apps_install
+  register: aur_apps_install_java_format
   changed_when: >
-    aur_apps_install.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install.stdout | default('') | lower)
+    aur_apps_install_java_format.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install_java_format.stdout | default('') | lower)
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: Ensure AUR apps are installed (audio tools)
+  command: >
+    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
+    ripit
+  register: aur_apps_install_audio
+  changed_when: >
+    aur_apps_install_audio.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install_audio.stdout | default('') | lower)
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: Ensure AUR apps are installed (code-server)
+  command: >
+    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
+    code-server
+  register: aur_apps_install_code_server
+  changed_when: >
+    aur_apps_install_code_server.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install_code_server.stdout | default('') | lower)
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: Ensure AUR apps are installed (zsh theme)
+  command: >
+    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
+    zsh-theme-powerlevel10k-bin-git
+  register: aur_apps_install_zsh_theme
+  changed_when: >
+    aur_apps_install_zsh_theme.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install_zsh_theme.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
