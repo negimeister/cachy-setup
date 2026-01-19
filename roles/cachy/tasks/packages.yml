@@ -7,14 +7,92 @@
 - name: Ensure required packages are installed
   pacman:
     name:
+      - ansible
+      - ansible-lint
+      - arm-none-eabi-binutils
+      - arm-none-eabi-gcc
+      - arm-none-eabi-gdb
+      - arm-none-eabi-newlib
+      - azure-cli
+      - azure-kubelogin
+      - bash-completion
       - git
       - base-devel
+      - bc
+      - cmake
+      - curl
+      - dfu-util
+      - diffutils
+      - diskonaut
+      - findutils
+      - git-zsh-completion
       - go
+      - glibc
+      - gnupg
+      - github-cli
+      - inetutils
+      - iputils
+      - jdk21-openjdk
+      - jq
+      - keyutils
+      - kubectl
+      - less
+      - lsof
+      - man-db
+      - man-pages
+      - maven
+      - mesa
+      - mlocate
+      - mtr
+      - nano
+      - ncurses
+      - nss-mdns
+      - openocd
+      - openssh
+      - parallel
+      - picocom
+      - pigz
+      - pinentry
+      - pkgfile
+      - procps-ng
+      - probe-rs
       - python-requests
       - python-packaging
       - python-docker
+      - python-flask
+      - python-hidapi
       - yay
       - flatpak
+      - rsync
+      - rustup
+      - shadow
+      - sigrok-firmware-fx2lafw
+      - starship
+      - stlink
+      - sudo
+      - tcpdump
+      - time
+      - traceroute
+      - tree
+      - tzdata
+      - unzip
+      - util-linux
+      - util-linux-libs
+      - vim
+      - vulkan-intel
+      - vulkan-radeon
+      - vte-common
+      - wget
+      - words
+      - xorg-xauth
+      - zip
+      - zoxide
+      - zsh
+      - zsh-autocomplete
+      - zsh-autosuggestions
+      - zsh-completions
+      - zsh-history-substring-search
+      - zsh-syntax-highlighting
       - realtime-privileges
       - tailscale
       - snapper
@@ -22,6 +100,21 @@
     state: present
     update_cache: yes
   become: yes
+
+- name: Install CLI apps
+  import_tasks: cli_apps.yml
+
+- name: Install GUI apps
+  import_tasks: gui_apps.yml
+
+- name: Ensure yay is installed
+  import_tasks: yay.yml
+
+- name: Install AUR apps
+  import_tasks: aur_apps.yml
+
+- name: Install GUI AUR apps
+  import_tasks: gui_aur_apps.yml
 
 - name: Change Default Shell to Zsh
   user:

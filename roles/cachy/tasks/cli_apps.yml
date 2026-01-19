@@ -1,0 +1,7 @@
+---
+- name: Ensure CLI apps are installed
+  pacman:
+    name:
+      - zellij
+    state: present
+  become: yes

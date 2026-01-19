@@ -1,0 +1,39 @@
+---
+- name: Ensure GUI apps are installed
+  pacman:
+    name:
+      - android-tools
+      - cachyos-meta-gaming
+      - chromium
+      - code
+      - darktable
+      - eog
+      - fcitx5
+      - fcitx5-configtool
+      - fcitx5-gtk
+      - fcitx5-mozc
+      - fcitx5-qt
+      - file-roller
+      - freecad
+      - gimp
+      - hyprshot
+      - inkscape
+      - kitty
+      - mixxx
+      - obs-studio
+      - obsidian
+      - openscad
+      - pcmanfm
+      - picard
+      - pipewire-jack
+      - prusa-slicer
+      - pulseview
+      - scrcpy
+      - virt-manager
+      - vlc
+      - wofi
+      - yt-dlp
+      - yakuake
+    state: present
+  become: yes
+ 

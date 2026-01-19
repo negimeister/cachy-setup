@@ -1,0 +1,20 @@
+---
+- name: Ensure GUI AUR apps are installed
+  command: >
+    yay -S --needed --noconfirm
+    zoom
+    openlens-bin
+    android-studio
+    intellij-idea-ultimate-edition
+    saber-bin
+    lmstudio
+    orca-slicer-bin
+    wofi-emoji
+    zen-browser-bin
+    pyprland
+  register: gui_aur_apps_install
+  changed_when: >
+    gui_aur_apps_install.rc == 0 and
+    'there is nothing to do' not in (gui_aur_apps_install.stdout | default('') | lower)
+  become: yes
+  become_user: "{{ ansible_user }}"

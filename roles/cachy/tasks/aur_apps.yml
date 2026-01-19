@@ -1,0 +1,14 @@
+---
+- name: Ensure AUR apps are installed
+  command: >
+    yay -S --needed --noconfirm
+    google-java-format
+    ripit
+    code-server
+    zsh-theme-powerlevel10k-bin-git
+  register: aur_apps_install
+  changed_when: >
+    aur_apps_install.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install.stdout | default('') | lower)
+  become: yes
+  become_user: "{{ ansible_user }}"
