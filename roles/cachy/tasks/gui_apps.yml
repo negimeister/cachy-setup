@@ -1,10 +1,10 @@
 ---
 - name: Install pipewire-jack (replaces jack)
-  command: pacman -S --noconfirm --needed pipewire-jack
-  register: pipewire_jack_install
-  changed_when: >
-    pipewire_jack_install.rc == 0 and
-    'there is nothing to do' not in (pipewire_jack_install.stdout | default('') | lower)
+  pacman:
+    name:
+      - pipewire-jack
+    state: present
+    extra_args: --ask=4
   become: yes
 
 - name: Ensure GUI apps are installed
