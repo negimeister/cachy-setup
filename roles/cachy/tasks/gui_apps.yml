@@ -1,4 +1,12 @@
 ---
+- name: Install pipewire-jack (replaces jack)
+  command: pacman -S --noconfirm --needed pipewire-jack
+  register: pipewire_jack_install
+  changed_when: >
+    pipewire_jack_install.rc == 0 and
+    'there is nothing to do' not in (pipewire_jack_install.stdout | default('') | lower)
+  become: yes
+
 - name: Ensure GUI apps are installed
   pacman:
     name:
@@ -25,7 +33,6 @@
       - openscad
       - pcmanfm
       - picard
-      - pipewire-jack
       - prusa-slicer
       - pulseview
       - scrcpy
