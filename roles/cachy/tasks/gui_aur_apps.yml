@@ -1,7 +1,7 @@
 ---
 - name: Ensure GUI AUR apps are installed
   command: >
-    yay -S --needed --noconfirm
+    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
     zoom
     openlens-bin
     android-studio

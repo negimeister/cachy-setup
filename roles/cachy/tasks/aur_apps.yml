@@ -1,7 +1,7 @@
 ---
 - name: Ensure AUR apps are installed
   command: >
-    yay -S --needed --noconfirm
+    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
     google-java-format
     ripit
     code-server
