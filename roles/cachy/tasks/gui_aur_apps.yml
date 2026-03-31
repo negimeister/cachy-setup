@@ -1,60 +1,45 @@
 ---
 - name: Ensure GUI AUR apps are installed (communications)
   command: >
-    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
-    zoom
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no zoom
   register: gui_aur_apps_install_zoom
   changed_when: >
-    gui_aur_apps_install_zoom.rc == 0 and
-    'there is nothing to do' not in (gui_aur_apps_install_zoom.stdout | default('') | lower)
+    gui_aur_apps_install_zoom.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_zoom.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
 
 - name: Ensure GUI AUR apps are installed (k8s tooling)
   command: >
-    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
-    openlens-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no freelens-bin
   register: gui_aur_apps_install_openlens
   changed_when: >
-    gui_aur_apps_install_openlens.rc == 0 and
-    'there is nothing to do' not in (gui_aur_apps_install_openlens.stdout | default('') | lower)
+    gui_aur_apps_install_openlens.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_openlens.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
 
 - name: Ensure GUI AUR apps are installed (jetbrains)
   command: >
-    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
-    android-studio
-    intellij-idea-ultimate-edition
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no android-studio intellij-idea-ultimate-edition
   register: gui_aur_apps_install_jetbrains
   changed_when: >
-    gui_aur_apps_install_jetbrains.rc == 0 and
-    'there is nothing to do' not in (gui_aur_apps_install_jetbrains.stdout | default('') | lower)
+    gui_aur_apps_install_jetbrains.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_jetbrains.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
 
 - name: Ensure GUI AUR apps are installed (creative tools)
   command: >
-    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
-    saber-bin
-    lmstudio
-    orca-slicer-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no saber-bin lmstudio orca-slicer-bin
   register: gui_aur_apps_install_creative
   changed_when: >
-    gui_aur_apps_install_creative.rc == 0 and
-    'there is nothing to do' not in (gui_aur_apps_install_creative.stdout | default('') | lower)
+    gui_aur_apps_install_creative.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_creative.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
 
 - name: Ensure GUI AUR apps are installed (desktop extras)
   command: >
-    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
-    wofi-emoji
-    zen-browser-bin
-    pyprland
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no wofi-emoji zen-browser-bin pyprland
   register: gui_aur_apps_install_desktop
   changed_when: >
-    gui_aur_apps_install_desktop.rc == 0 and
-    'there is nothing to do' not in (gui_aur_apps_install_desktop.stdout | default('') | lower)
+    gui_aur_apps_install_desktop.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_desktop.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"

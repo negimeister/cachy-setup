@@ -1,7 +1,7 @@
 ---
 - name: Ensure AUR apps are installed (java-format)
   command: >
-    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
     google-java-format
   register: aur_apps_install_java_format
   changed_when: >
@@ -12,7 +12,7 @@
 
 - name: Ensure AUR apps are installed (audio tools)
   command: >
-    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
     ripit
   register: aur_apps_install_audio
   changed_when: >
@@ -23,7 +23,7 @@
 
 - name: Ensure AUR apps are installed (code-server)
   command: >
-    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
     code-server
   register: aur_apps_install_code_server
   changed_when: >
@@ -34,7 +34,7 @@
 
 - name: Ensure AUR apps are installed (zsh theme)
   command: >
-    yay -S --needed --noconfirm --sudoloop --answerclean=all --answerdiff=no
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
     zsh-theme-powerlevel10k-bin-git
   register: aur_apps_install_zsh_theme
   changed_when: >

@@ -7,6 +7,25 @@
     mode: "644"
   become: true
 
+- name: Register jpdv layout in evdev.xml
+  ansible.builtin.blockinfile:
+    path: /usr/share/X11/xkb/rules/evdev.xml
+    insertbefore: "</layoutList>"
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK: jpdv layout -->"
+    block: |2
+        <layout>
+          <configItem>
+            <name>jpdv</name>
+            <shortDescription>jpdv</shortDescription>
+            <description>JPDV (custom layout)</description>
+            <languageList>
+              <iso639Id>eng</iso639Id>
+            </languageList>
+          </configItem>
+          <variantList/>
+        </layout>
+  become: true
+
 - name: Copy KDE keeb config
   ansible.builtin.copy:
     src: kxkbrc
