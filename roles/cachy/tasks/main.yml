@@ -1,24 +1,24 @@
 ---
-- name: Install base packages and shell defaults
-  import_tasks: packages.yml
+#- name: Install base packages and shell defaults
+#  import_tasks: packages.yml
 
-- name: Deploy dotfiles
-  import_tasks: dotfiles.yml
+#- name: Deploy dotfiles
+#  import_tasks: dotfiles.yml
 
-- name: Configure Tailscale connectivity
-  import_tasks: tailscale.yml
-  when:
-    - tailscale_login_server is defined
-    - tailscale_auth_key is defined
+#- name: Configure Tailscale connectivity
+#  import_tasks: tailscale.yml
+#  when:
+#    - tailscale_login_server is defined
+#    - tailscale_auth_key is defined
 
-- name: Configure Btrfs snapshots with snapper
-  import_tasks: snapper.yml
+#- name: Configure Btrfs snapshots with snapper
+#  import_tasks: snapper.yml
 
-- name: Configure Docker
-  import_tasks: docker.yml
+#- name: Configure Docker
+#  import_tasks: docker.yml
 
-- name: Deploy containerized services
-  import_tasks: containers.yml
+#- name: Deploy containerized services
+#  import_tasks: containers.yml
 
 #- name: Configure distrobox environment
 #  import_tasks: distrobox.yml

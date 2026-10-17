@@ -12,71 +12,114 @@
 - name: Ensure required packages are installed
   pacman:
     name:
+      - android-udev
       - ansible
       - ansible-lint
       - arm-none-eabi-binutils
       - arm-none-eabi-gcc
       - arm-none-eabi-gdb
       - arm-none-eabi-newlib
+      - aws-cli-v2
       - azure-cli
       - azure-kubelogin
-      - bash-completion
-      - git
       - base-devel
+      - bash-completion
       - bc
+      - bind
+      - bluetui
+      - btop
+      - chezmoi
+      - cilium-cli
+      - claude-code
       - cmake
+      - copyparty
       - curl
       - dfu-util
       - diffutils
       - diskonaut
+      - duf
+      - esptool
+      - fastfetch
+      - fastflowlm
       - findutils
+      - flatpak
+      - framework-system
+      - git
       - git-zsh-completion
-      - go
+      - github-cli
+      - glances
       - glibc
       - gnupg
-      - github-cli
+      - go
+      - helm
       - inetutils
+      - iotop
+      - iperf3
       - iputils
       - jdk21-openjdk
       - jq
+      - k9s
       - keyutils
       - kubectl
+      - kubetui
+      - lemonade-server
       - less
+      - libdvdcss
+      - llama-cpp
       - lsof
       - man-db
       - man-pages
       - maven
       - mesa
-      - mlocate
+      - micro
+      - mosquitto
       - mtr
       - nano
+      - nano-syntax-highlighting
       - ncurses
+      - nmap
+      - npm
       - nss-mdns
+      - openai-codex
+      - openbsd-netcat
+      - opencode
       - openocd
       - openssh
+      - osc2midi
       - parallel
+      - paru
       - picocom
       - pigz
       - pinentry
       - pkgfile
-      - procps-ng
+      - plocate
+      - postgresql
       - probe-rs
-      - python-requests
-      - python-packaging
+      - procps-ng
+      - pv
       - python-docker
       - python-flask
       - python-hidapi
-      - yay
-      - flatpak
+      - python-kubernetes
+      - python-packaging
+      - python-pipx
+      - python-requests
+      - realtime-privileges
+      - ripgrep
       - rsync
       - rustup
       - shadow
       - sigrok-firmware-fx2lafw
+      - snapper
+      - sox
+      - sshfs
       - starship
       - stlink
       - sudo
+      - tailscale
       - tcpdump
       - time
+      - tmux
       - traceroute
       - tree
       - tzdata
@@ -84,12 +127,15 @@
       - util-linux
       - util-linux-libs
       - vim
+      - vlc-plugins-all
+      - vte-common
       - vulkan-intel
       - vulkan-radeon
-      - vte-common
       - wget
+      - whisper-cpp
       - words
       - xorg-xauth
+      - yay
       - zip
       - zoxide
       - zsh
@@ -98,10 +144,6 @@
       - zsh-completions
       - zsh-history-substring-search
       - zsh-syntax-highlighting
-      - realtime-privileges
-      - tailscale
-      - snapper
-      - bluetui
     state: present
     update_cache: yes
   become: yes

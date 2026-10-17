@@ -1,44 +1,55 @@
 ---
-- name: Ensure AUR apps are installed (java-format)
+- name: Ensure AUR apps are installed (dev tools)
   command: >
     yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    google-java-format
-  register: aur_apps_install_java_format
+    gitlint apache-tools kcat-cli rustfs-cli-bin hubble-bin
+  register: aur_apps_install_dev
   changed_when: >
-    aur_apps_install_java_format.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install_java_format.stdout | default('') | lower)
+    aur_apps_install_dev.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install_dev.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
 
-- name: Ensure AUR apps are installed (audio tools)
+- name: Ensure AUR apps are installed (gaming)
   command: >
     yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    ripit
-  register: aur_apps_install_audio
+    proton-ge-custom-bin
+  register: aur_apps_install_gaming
   changed_when: >
-    aur_apps_install_audio.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install_audio.stdout | default('') | lower)
+    aur_apps_install_gaming.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install_gaming.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
 
-- name: Ensure AUR apps are installed (code-server)
+- name: Ensure AUR apps are installed (peripherals and printing)
   command: >
     yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    code-server
-  register: aur_apps_install_code_server
+    ptouch-print ltunify pairing_tool splix
+  register: aur_apps_install_peripherals
   changed_when: >
-    aur_apps_install_code_server.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install_code_server.stdout | default('') | lower)
+    aur_apps_install_peripherals.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install_peripherals.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
 
-- name: Ensure AUR apps are installed (zsh theme)
+- name: Ensure AUR apps are installed (libraries)
   command: >
     yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    zsh-theme-powerlevel10k-bin-git
-  register: aur_apps_install_zsh_theme
+    ggml-vulkan python-customtkinter
+  register: aur_apps_install_libs
   changed_when: >
-    aur_apps_install_zsh_theme.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install_zsh_theme.stdout | default('') | lower)
+    aur_apps_install_libs.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install_libs.stdout | default('') | lower)
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: Ensure AUR apps are installed (misc)
+  command: >
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
+    wordle-cli-bin
+  register: aur_apps_install_misc
+  changed_when: >
+    aur_apps_install_misc.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install_misc.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"

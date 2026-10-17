@@ -10,6 +10,7 @@
 - name: Ensure GUI apps are installed
   pacman:
     name:
+      - alacritty
       - android-tools
       - cachyos-gaming-meta
       - chromium
@@ -27,20 +28,25 @@
       - hyprshot
       - inkscape
       - kitty
+      - lemonade-desktop
+      - meld
       - mixxx
       - obs-studio
-      - obsidian
+      - octopi
       - openscad
       - pcmanfm
       - picard
       - prusa-slicer
       - pulseview
       - scrcpy
+      - solaar
+      - sqlitebrowser
       - virt-manager
       - vlc
+      - wireshark-qt
       - wofi
-      - yt-dlp
       - yakuake
+      - yt-dlp
     state: present
   become: yes
  
