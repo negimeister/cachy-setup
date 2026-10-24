@@ -154,9 +154,6 @@
 - name: Install GUI apps
   import_tasks: gui_apps.yml
 
-- name: Ensure yay is installed
-  import_tasks: yay.yml
-
 - name: Install AUR apps
   import_tasks: aur_apps.yml
 
