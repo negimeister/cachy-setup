@@ -2,7 +2,7 @@
 - name: Ensure AUR apps are installed (dev tools)
   command: >
     yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    gitlint apache-tools kcat-cli rustfs-cli-bin hubble-bin
+    acli-bin apache-tools browser-use-cli gitlint hubble-bin kcat-cli maestro-bin picotool rustfs-cli-bin
   register: aur_apps_install_dev
   changed_when: >
     aur_apps_install_dev.rc == 0 and
@@ -24,7 +24,7 @@
 - name: Ensure AUR apps are installed (peripherals and printing)
   command: >
     yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    ptouch-print ltunify pairing_tool splix
+    ltunify pairing_tool ptouch-print splix
   register: aur_apps_install_peripherals
   changed_when: >
     aur_apps_install_peripherals.rc == 0 and
@@ -35,7 +35,7 @@
 - name: Ensure AUR apps are installed (libraries)
   command: >
     yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    ggml-vulkan python-customtkinter
+    python-customtkinter python-redfish python-sounddevice
   register: aur_apps_install_libs
   changed_when: >
     aur_apps_install_libs.rc == 0 and
@@ -43,10 +43,21 @@
   become: yes
   become_user: "{{ ansible_user }}"
 
+- name: Ensure AUR apps are installed (infra and remote management)
+  command: >
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
+    badfish ryzenadj supermicro-update-manager
+  register: aur_apps_install_infra
+  changed_when: >
+    aur_apps_install_infra.rc == 0 and
+    'there is nothing to do' not in (aur_apps_install_infra.stdout | default('') | lower)
+  become: yes
+  become_user: "{{ ansible_user }}"
+
 - name: Ensure AUR apps are installed (misc)
   command: >
     yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    wordle-cli-bin
+    1password-cli kdotool-bin wordle-cli-bin
   register: aur_apps_install_misc
   changed_when: >
     aur_apps_install_misc.rc == 0 and

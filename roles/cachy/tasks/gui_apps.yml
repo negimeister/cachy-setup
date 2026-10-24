@@ -12,10 +12,24 @@
     name:
       - alacritty
       - android-tools
+      - ark
+      - bluedevil
+      - breeze-gtk
+      - btrfs-assistant
+      - cachyos-emerald-kde-theme-git
       - cachyos-gaming-meta
+      - cachyos-iridescent-kde
+      - cachyos-kernel-manager
+      - cachyos-nord-kde-theme-git
+      - cachyos-packageinstaller
+      - cachyos-settings
+      - cachyos-themes-sddm
+      - cachyos-wallpapers
       - chromium
       - code
       - darktable
+      - dolphin
+      - easyeffects
       - eog
       - fcitx5
       - fcitx5-configtool
@@ -25,28 +39,62 @@
       - file-roller
       - freecad
       - gimp
+      - gnumeric
+      - gparted
+      - gwenview
+      - haruna
+      - hermes-agent-desktop
       - hyprshot
       - inkscape
+      - kate
+      - kcalc
+      - kdeconnect
+      - kdialog
+      - kinfocenter
       - kitty
+      - konquest
+      - konsole
+      - kscreen
+      - kwalletmanager
+      - labwc
       - lemonade-desktop
       - meld
       - mixxx
+      - moonlight-qt
       - obs-studio
       - octopi
+      - okular
       - openscad
+      - pavucontrol
       - pcmanfm
       - picard
+      - plasma-browser-integration
+      - plasma-desktop
+      - plasma-firewall
+      - plasma-integration
+      - plasma-nm
+      - plasma-pa
+      - plasma-systemmonitor
+      - plasma-thunderbolt
+      - plasma-workspace
+      - plumber
       - prusa-slicer
       - pulseview
       - scrcpy
+      - sddm
+      - sddm-kcm
       - solaar
+      - spectacle
       - sqlitebrowser
+      - telegram-desktop
       - virt-manager
       - vlc
       - wireshark-qt
       - wofi
+      - xdg-desktop-portal-kde
+      - xorg-server
       - yakuake
       - yt-dlp
+      - zen-browser-bin
     state: present
   become: yes
- 

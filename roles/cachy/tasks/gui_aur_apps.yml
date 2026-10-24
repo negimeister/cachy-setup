@@ -37,7 +37,7 @@
 
 - name: Ensure GUI AUR apps are installed (3d printing and slicers)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no orca-slicer-bin bambustudio-appimage
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no bambustudio-appimage orca-slicer-bin
   register: gui_aur_apps_install_slicers
   changed_when: >
     gui_aur_apps_install_slicers.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_slicers.stdout | default('') | lower)
@@ -73,7 +73,7 @@
 
 - name: Ensure GUI AUR apps are installed (creative and hardware)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no seamly2d inkscape-silhouette-git weylus-bin intiface-central-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no inkscape-silhouette-git intiface-central-bin seamly2d weylus-bin
   register: gui_aur_apps_install_creative
   changed_when: >
     gui_aur_apps_install_creative.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_creative.stdout | default('') | lower)
@@ -91,9 +91,18 @@
 
 - name: Ensure GUI AUR apps are installed (browser)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no zen-browser-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no google-chrome
   register: gui_aur_apps_install_browser
   changed_when: >
     gui_aur_apps_install_browser.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_browser.stdout | default('') | lower)
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: Ensure GUI AUR apps are installed (desktop apps)
+  command: >
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no 1password esphome-desktop-bin handy-bin
+  register: gui_aur_apps_install_desktop
+  changed_when: >
+    gui_aur_apps_install_desktop.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_desktop.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
