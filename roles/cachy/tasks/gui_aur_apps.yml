@@ -1,108 +1,173 @@
 ---
 - name: Ensure GUI AUR apps are installed (communications)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no zoom
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - zoom
   register: gui_aur_apps_install_zoom
-  changed_when: >
-    gui_aur_apps_install_zoom.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_zoom.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_zoom.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_zoom.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (k8s tooling)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no freelens-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - freelens-bin
   register: gui_aur_apps_install_openlens
-  changed_when: >
-    gui_aur_apps_install_openlens.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_openlens.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_openlens.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_openlens.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (jetbrains and android)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no android-studio android-studio-beta android-studio-canary
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - android-studio
+    - android-studio-beta
+    - android-studio-canary
   register: gui_aur_apps_install_jetbrains
-  changed_when: >
-    gui_aur_apps_install_jetbrains.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_jetbrains.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_jetbrains.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_jetbrains.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (ai/ml)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no lm-studio-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - lm-studio-bin
   register: gui_aur_apps_install_ai
-  changed_when: >
-    gui_aur_apps_install_ai.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_ai.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_ai.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_ai.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (3d printing and slicers)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no bambustudio-appimage orca-slicer-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - bambustudio-appimage
+    - orca-slicer-bin
   register: gui_aur_apps_install_slicers
-  changed_when: >
-    gui_aur_apps_install_slicers.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_slicers.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_slicers.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_slicers.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (emulators)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no azahar-appimage-wayland citra-appimage
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - azahar-appimage-wayland
+    - citra-appimage
   register: gui_aur_apps_install_emulators
-  changed_when: >
-    gui_aur_apps_install_emulators.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_emulators.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_emulators.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_emulators.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (keyboard tools)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no vial-appimage zmk-studio-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - vial-appimage
+    - zmk-studio-bin
   register: gui_aur_apps_install_keyboard
-  changed_when: >
-    gui_aur_apps_install_keyboard.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_keyboard.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_keyboard.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_keyboard.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (notes and productivity)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no obsidian-bin pdfsam
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - obsidian-bin
+    - pdfsam
   register: gui_aur_apps_install_notes
-  changed_when: >
-    gui_aur_apps_install_notes.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_notes.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_notes.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_notes.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (creative and hardware)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no inkscape-silhouette-git intiface-central-bin seamly2d weylus-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - inkscape-silhouette-git
+    - intiface-central-bin
+    - seamly2d
+    - weylus-bin
   register: gui_aur_apps_install_creative
-  changed_when: >
-    gui_aur_apps_install_creative.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_creative.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_creative.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_creative.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (remote management)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no ipmiview
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - ipmiview
   register: gui_aur_apps_install_remote
-  changed_when: >
-    gui_aur_apps_install_remote.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_remote.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_remote.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_remote.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (browser)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no google-chrome
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - google-chrome
   register: gui_aur_apps_install_browser
-  changed_when: >
-    gui_aur_apps_install_browser.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_browser.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_browser.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_browser.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure GUI AUR apps are installed (desktop apps)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no 1password esphome-desktop-bin handy-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - 1password
+    - esphome-desktop-bin
+    - handy-bin
   register: gui_aur_apps_install_desktop
-  changed_when: >
-    gui_aur_apps_install_desktop.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_desktop.stdout | default('') | lower)
+  failed_when: false
+  changed_when: gui_aur_apps_install_desktop.rc == 0 and 'there is nothing to do' not in (gui_aur_apps_install_desktop.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
+
+- name: Report failed GUI AUR packages
+  vars:
+    gui_aur_failed: "{{ (gui_aur_apps_install_zoom.results + gui_aur_apps_install_openlens.results + gui_aur_apps_install_jetbrains.results + gui_aur_apps_install_ai.results + gui_aur_apps_install_slicers.results + gui_aur_apps_install_emulators.results + gui_aur_apps_install_keyboard.results + gui_aur_apps_install_notes.results + gui_aur_apps_install_creative.results + gui_aur_apps_install_remote.results + gui_aur_apps_install_browser.results + gui_aur_apps_install_desktop.results) | selectattr('rc', 'ne', 0) | map(attribute='item') | list }}"
+  debug:
+    msg: "GUI AUR packages that FAILED to install ({{ gui_aur_failed | length }}): {{ gui_aur_failed | join(', ') if gui_aur_failed else 'none — all installed successfully' }}"

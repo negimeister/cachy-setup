@@ -1,66 +1,101 @@
 ---
 - name: Ensure AUR apps are installed (dev tools)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    acli-bin apache-tools browser-use-cli gitlint hubble-bin kcat-cli maestro-bin picotool rustfs-cli-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - acli-bin
+    - apache-tools
+    - browser-use-cli
+    - gitlint
+    - hubble-bin
+    - kcat-cli
+    - maestro-bin
+    - picotool
+    - rustfs-cli-bin
   register: aur_apps_install_dev
-  changed_when: >
-    aur_apps_install_dev.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install_dev.stdout | default('') | lower)
+  failed_when: false
+  changed_when: aur_apps_install_dev.rc == 0 and 'there is nothing to do' not in (aur_apps_install_dev.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure AUR apps are installed (gaming)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    proton-ge-custom-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - proton-ge-custom-bin
   register: aur_apps_install_gaming
-  changed_when: >
-    aur_apps_install_gaming.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install_gaming.stdout | default('') | lower)
+  failed_when: false
+  changed_when: aur_apps_install_gaming.rc == 0 and 'there is nothing to do' not in (aur_apps_install_gaming.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure AUR apps are installed (peripherals and printing)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    ltunify pairing_tool ptouch-print splix
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - ltunify
+    - pairing_tool
+    - ptouch-print
+    - splix
   register: aur_apps_install_peripherals
-  changed_when: >
-    aur_apps_install_peripherals.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install_peripherals.stdout | default('') | lower)
+  failed_when: false
+  changed_when: aur_apps_install_peripherals.rc == 0 and 'there is nothing to do' not in (aur_apps_install_peripherals.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure AUR apps are installed (libraries)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    python-customtkinter python-redfish python-sounddevice
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - python-customtkinter
+    - python-redfish
+    - python-sounddevice
   register: aur_apps_install_libs
-  changed_when: >
-    aur_apps_install_libs.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install_libs.stdout | default('') | lower)
+  failed_when: false
+  changed_when: aur_apps_install_libs.rc == 0 and 'there is nothing to do' not in (aur_apps_install_libs.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure AUR apps are installed (infra and remote management)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    badfish ryzenadj supermicro-update-manager
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - badfish
+    - ryzenadj
+    - supermicro-update-manager
   register: aur_apps_install_infra
-  changed_when: >
-    aur_apps_install_infra.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install_infra.stdout | default('') | lower)
+  failed_when: false
+  changed_when: aur_apps_install_infra.rc == 0 and 'there is nothing to do' not in (aur_apps_install_infra.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
 
 - name: Ensure AUR apps are installed (misc)
   command: >
-    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no
-    1password-cli kdotool-bin wordle-cli-bin
+    yay -S --needed --noconfirm --sudoflags=-n --answerclean=all --answerdiff=no {{ item }}
+  loop:
+    - 1password-cli
+    - kdotool-bin
+    - wordle-cli-bin
   register: aur_apps_install_misc
-  changed_when: >
-    aur_apps_install_misc.rc == 0 and
-    'there is nothing to do' not in (aur_apps_install_misc.stdout | default('') | lower)
+  failed_when: false
+  changed_when: aur_apps_install_misc.rc == 0 and 'there is nothing to do' not in (aur_apps_install_misc.stdout | default('') | lower)
   become: yes
   become_user: "{{ ansible_user }}"
+  loop_control:
+    label: "{{ item }}"
+
+- name: Report failed AUR packages
+  vars:
+    aur_failed: "{{ (aur_apps_install_dev.results + aur_apps_install_gaming.results + aur_apps_install_peripherals.results + aur_apps_install_libs.results + aur_apps_install_infra.results + aur_apps_install_misc.results) | selectattr('rc', 'ne', 0) | map(attribute='item') | list }}"
+  debug:
+    msg: "AUR packages that FAILED to install ({{ aur_failed | length }}): {{ aur_failed | join(', ') if aur_failed else 'none — all installed successfully' }}"

@@ -26,7 +26,7 @@ One role, `roles/cachy`. `cachy.yml` sets a UTF-8 locale env and applies it. `ro
 Task files in `roles/cachy/tasks/`, roughly in run order:
 
 - `packages.yml` — pacman system upgrade + canonical package list (includes `yay` from the Cachy repos); imports `cli_apps.yml`, `gui_apps.yml`, `aur_apps.yml`, `gui_aur_apps.yml`. Sets login shell to zsh, adds the user to `uucp`. **Add official-repo packages here or in the cli/gui split.**
-- `aur_apps.yml` / `gui_aur_apps.yml` — AUR installs do NOT use a pacman module: they shell out to `yay -S` one group per task with a hand-rolled `changed_when` grepping stdout for `there is nothing to do`. **Copy an existing block and change package names + the `register` var when adding AUR packages.**
+- `aur_apps.yml` / `gui_aur_apps.yml` — AUR installs do NOT use a pacman module: they shell out to `yay -S` per package in a loop (one loop per group), with `failed_when: false` so a single bad package doesn't abort the run, and a final "Report failed … packages" task that lists exactly what failed. **Add packages to the appropriate group's `loop:` list.**
 - `peripherals.yml` — installs udev rules from `files/*.rules` (Sofle keyboard, hidraw, probe-rs) to `/etc/udev/rules.d/`. The `jpdv` Dvorak keyboard layout and KDE `kxkbrc` are owned by chezmoi, not here.
 - `docker.yml` / `containers.yml` — Docker install + Docker Hub login (needs `docker_hub_username`/`docker_hub_password`), LinuxServer containers (Syncthing, Kopia) under `/opt/containers` via `community.docker`.
 - `distrobox.yml` — creates the `negibox` container from `negimeister/negibox-desktop:latest`, wired for realtime audio (`--cap-add=sys_nice`, uucp/realtime groups).
